@@ -140,4 +140,16 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
             reader.close();
         }
     }
+
+    public Cursor searchQuery(String query){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = COL_ITEM_NAME+" LIKE ? OR " + COL_ITEM_TYPE + " LIKE ?";
+        String[] selectionArgs = new String[]{ "%"+query+"%", "%"+query+"%" };
+        Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, SHOPPING_COLUMNS, selection, selectionArgs, null, null, null, null);
+
+        return cursor;
+
+    }
+
 }
